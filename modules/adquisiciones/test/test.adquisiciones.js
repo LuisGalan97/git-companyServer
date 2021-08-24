@@ -8,12 +8,13 @@ const request  = supertest(app);
 
 
 describe("testear adquisiciones",()=>{
-    it("getAdquisicion",()=>{
+    it("getAdquisicion",(done)=>{
         request.get("/adquisiciones")
         .then((data)=>{
             console.log(data.body);
             //assert.exists(data.body);
             //assert.deepEqual(data.body, null);
+            //done();
         });
     });   
 });

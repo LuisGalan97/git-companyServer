@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 
 const AdquisicionSchema = new Schema({
-    nombre: {type: String, required: true},
+    nombre: {type: String, required: false},
     valorUnidad: {type: Number, required: true},
     cantidad: {type: Number, required: true},
     area: {type: String, required: true},

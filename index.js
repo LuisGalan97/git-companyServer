@@ -3,9 +3,8 @@
 const express = require('express');//Ejecutamos el modulo 'express' y adquirimos su respuesta como un objeto o funcion que otorga derecho de uso de express
 const morgan = require('morgan'); //Ejecutamos el modulo 'morgan' y adquirimos su respuesta como un objeto o funcion que otorga derecho de uso de morgan
 //------------------------------------- Modulos propios-------------------------------------------------------------
-
-
-const {mongoose} = require('./database');//Ejecutamos el modulo 'database', y adquirimos la desestructuracion de su respuesta(mongoose) probablemente con derechos de uso.
+const dbConnect = require('./database/dbConnect');//Ejecutamos el modulo 'database', y adquirimos la desestructuracion de su respuesta(mongoose) probablemente con derechos de uso.
+dbConnect.connect();
 //--------------------------------------Proceso---------------------------------------------------------------------
 const app = express();//En una constante, asignamos la respuesta del llamado de la funcion express, derechos de creacion de un servidor.
 
