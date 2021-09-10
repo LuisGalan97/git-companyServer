@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const URI = 'mongodb://localhost/dbEnterprise';
 
-
 const dbConnect = {};
 
 dbConnect.connect = () => {
@@ -10,9 +9,5 @@ dbConnect.connect = () => {
         .catch(err => console.log("No se pudo conectar a la base de datos..."));
 }
 
+module.exports = dbConnect; 
 
-
-module.exports = dbConnect; //Se exporta hacia la base de datos?
-
-//Desarrollo enfocado a test -> Por cada codigo que coloque, debo probarlo
-//nyc

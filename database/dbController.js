@@ -64,7 +64,6 @@ dbController.read = async (id, model) => {
 
 dbController.update = async (document, model) => {
     return await model.findOneAndReplace({ "_id": document._id }, document)
-    
     .then((input)=>{
         const data = (input === null) ? {} : input;
 

@@ -40,7 +40,7 @@ employeeCtrl.update = async (req, res) => {
     });    
 }
 
-employeeCtrl.delete = async(req, res) => {
+employeeCtrl.delete = async (req, res) => {
     const id = req.params.id;    
     
     await dbController.delete(id, model)

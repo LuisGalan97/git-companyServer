@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router()
 
-
 const purchaseCtrl = require('../controller/controller.purchases');
-
 
 router.post('/', purchaseCtrl.create);
 router.get('/', purchaseCtrl.read);
