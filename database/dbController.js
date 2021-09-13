@@ -5,7 +5,7 @@ dbController.create = async (document, model) => {
 
     return await newDocument.save()
     .then((data)=>{
-        const answer = {status: "succesfull", details: {request: "create", createdDocument: data}}
+        const answer = {status: "successfull", details: {request: "create", createdDocument: data}}
 
         return answer;
     })
@@ -13,22 +13,21 @@ dbController.create = async (document, model) => {
         let error = e.message;
         console.log(error);
 
-        if(error.includes("validation failed")){
-            const pos = error.indexOf(":") + 1;
-            error = error.substring(pos);
-            const data = error.split(",");
-            const details = [];
+        const pos = error.indexOf(":") + 1;
+        error = error.substring(pos);
+        const data = error.split(",");
+        console.log(data);
+        const arrayData = [];
 
-            data.forEach((item)=>{
-                details.push({
-                    nameValue: item.split(":")[0].trim(),
-                    error: item.includes("required") ? "missing value" : "incorrect type value" 
-                });
+        data.forEach((item)=>{
+            arrayData.push({
+                nameValue: item.split(":")[0].trim(),
+                reason: item.includes("required") ? "missing value" : "incorrect type value" 
             });
+        });
 
-            const answer = {status: "error", details: details}    
-            return answer;
-        }        
+        const answer = {status: "error", details: {request: "create", error: arrayData}}    
+        return answer; 
     }); 
 }
 
@@ -38,27 +37,28 @@ dbController.read = async (id, model) => {
     return await model.find(id_object)
     .then((data)=>{
         dataNoId = JSON.parse(JSON.stringify(data));
-
+        //datano = data;
         dataNoId.forEach((i)=>{
             delete i._id;
         })
     
         const answer = (JSON.stringify(id_object) === JSON.stringify({})) 
-        ? {status: "sucessfull", details: {request: "read", readData: data}} 
+        ? {status: "successfull", details: {request: "read", readData: data}} 
         : (JSON.stringify(data) === JSON.stringify([]))
         ? {status: "error", details: {request: "readById", id: id, error: "id not found"}} 
-        : {status: "sucessfull", details: {request: "readById", id: id, readDocument: dataNoId}}
+        : {status: "successfull", details: {request: "readById", id: id, readDocument: dataNoId}}
 
         return answer;
     })
     .catch((e)=>{
         let error = e.message;
-        console.log(error);
+        //console.log(error);
+    
+        const answer = {status: "error", details: 
+        {request: "readById", id: id, error: "invalid id format"}}
 
-        if(error.includes("Cast to ObjectId failed")){
-            const answer = {status: "error", details: {id: id, error: "invalid id format"}}
-            return answer;
-        }
+        return answer;
+    
     }); 
 }
 
@@ -75,33 +75,34 @@ dbController.update = async (document, model) => {
     
         const answer = (JSON.stringify(data) === JSON.stringify({}))
         ? {status:"error", details: {request: "update", id: document._id, error: "id not found"}} 
-        : {status: "sucessfull", details: {request: "update", id: document._id, 
+        : {status: "successfull", details: {request: "update", id: document._id, 
         originalDocument: dataNoId, replacedBy: documentNoId}}
 
         return answer;
     })
     .catch((e)=>{
         let error = e.message;
-        console.log(error);
+        //console.log(error);
 
         if(error.includes("Cast to ObjectId failed")){
-            const answer = {status: "error", details: {id: document._id, error: "invalid id format"}}
+            const answer = {status: "error", details: 
+            {request: "update", id: document._id, error: "invalid id format"}}
             return answer;
-        }  
-        if(error.includes("validation failed")){
+        }else{
             const pos = error.indexOf(":") + 1;
             error = error.substring(pos);
             const data = error.split(",");
-            const details = [];
+            const arrayData = [];
 
             data.forEach((item)=>{
-                details.push({
+                arrayData.push({
                     nameValue: item.split(":")[0].trim(),
-                    error: item.includes("required") ? "missing value" : "incorrect type value" 
+                    reason: item.includes("required") ? "missing value" : "incorrect type value" 
                 });
             });
 
-            const answer = {status: "error", details: details}  
+            const answer = {status: "error", details: 
+            {request: "update", id: document._id, error: arrayData}}    
             return answer;
         }
     });     
@@ -110,7 +111,7 @@ dbController.update = async (document, model) => {
 dbController.delete = async (id, model) => {
     const id_object = {"_id": id};
 
-    return await model.findByIdAndRemove(id_object)
+    return await model.findByIdAndDelete(id_object)
     .then((input)=>{
         const data = (input === null) ? {} : input;
 
@@ -120,19 +121,17 @@ dbController.delete = async (id, model) => {
     
         const answer = (JSON.stringify(data) === JSON.stringify({}))
         ? {status:"error", details: {request: "delete", id: id, error: "id not found"}} 
-        : {status: "sucessfull", details: {request: "delete", id: id, 
+        : {status: "successfull", details: {request: "delete", id: id, 
         deletedDocument: dataNoId}}
 
         return answer;
     })
     .catch((e)=>{
         let error = e.message;
-        console.log(error);
+        //console.log(error);
 
-        if(error.includes("Cast to ObjectId failed")){
-            const answer = {status: "error", details: {id: id, error: "invalid id format"}}
-            return answer;
-        }  
+        const answer = {status: "error", details: {request: "delete", id: id, error: "invalid id format"}}
+        return answer;      
     });
 }
 

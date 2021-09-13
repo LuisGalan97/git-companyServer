@@ -1,9 +1,10 @@
+const url = 'mongodb://localhost/dbEnterprise';
 //---------------------------------- Modulos Externos-----------------------------------
 const express = require("express");
 const morgan = require("morgan"); 
 //------------------------------------- Modulos propios---------------------------------
 const dbConnect = require("./database/dbConnect");
-dbConnect.connect();
+dbConnect.connect(url);
 //--------------------------------------Proceso-----------------------------------------
 const app = express();
 

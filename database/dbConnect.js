@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
-const URI = 'mongodb://localhost/dbEnterprise';
 
 const dbConnect = {};
 
-dbConnect.connect = () => {
-     mongoose.connect(URI)
-        .then(db => console.log("Conectado a la base de datos!"))
-        .catch(err => console.log("No se pudo conectar a la base de datos..."));
+dbConnect.connect = async (url) => {
+    return await mongoose.connect(url)
+    .then(()=>{
+        console.log("conectado a la base de datos");
+        return "connected";
+    })
+    .catch(()=>{
+        console.log("no se pudo conectar");
+        return "connection fail";
+    })
 }
 
 module.exports = dbConnect; 
-

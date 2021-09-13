@@ -10,9 +10,6 @@ employeeCtrl.create = async (req, res) => {
     .then((data)=>{
         res.status(200).send(data);
     })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });  
 }
 
 employeeCtrl.read = async (req, res) => {
@@ -21,10 +18,7 @@ employeeCtrl.read = async (req, res) => {
     await dbController.read(id, model)
     .then((data)=>{
         res.status(200).send(data);
-    })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });    
+    })  
 }
 
 employeeCtrl.update = async (req, res) => {
@@ -34,10 +28,7 @@ employeeCtrl.update = async (req, res) => {
     await dbController.update(document, model)
     .then((data)=>{
         res.status(200).send(data);
-    })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });    
+    })  
 }
 
 employeeCtrl.delete = async (req, res) => {
@@ -46,10 +37,7 @@ employeeCtrl.delete = async (req, res) => {
     await dbController.delete(id, model)
     .then((data)=>{
         res.status(200).send(data);
-    })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });    
+    })  
 }
 
 module.exports = employeeCtrl;

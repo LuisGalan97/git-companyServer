@@ -1,33 +1,24 @@
-//const { createEmpleado } = require("../controlador/controlador.empleados");
-//En proceso...
-/*const supertest = require("supertest");
-const server = require("../../../index");
-const assert = require("chai").assert;
+const testCtrl = require("../../../test/controllerTest");
 
-const request  = supertest(server);
+const moduleName = "purchases";
 
+const url = "/purchases";
 
-describe("testear adquisiciones",()=>{
-    it("getAdquisicion",(done)=>{
-        request.get("/adquisiciones")
-        .then((data)=>{
-            console.log(data.body);
-            //assert.exists
-            (data.body);
-            //assert.deepEqual(data.body, null);
-            //done();
-        });
-    });   
-});
+const objectPost = {
+    "name": "testName",
+    "unitPrice": 1,
+    "amount": 1,
+    "section": "testSection",
+    "usefulLife": 1
+}
 
+const objectPut = {
+    "name": "testNameChanged",
+    "unitPrice": 2,
+    "amount": 2,
+    "section": "testSectionChanged",
+    "usefulLife": 2
+}
 
-/*superobject.post("/empleados").send({
-            name:"Matias",
-            position:"Developer",
-            office:"Miami",
-            salary:70000
-        }).then((data)=>{
-            assert.exists(data.body);
-            assert.deepEqual(data.body, {'status':'Employee saved'});
-        })
-        console.log("testeando"); */
+testCtrl.testCrud(moduleName, url, objectPost, objectPut);
+testCtrl.testErrors(moduleName, url, objectPost);

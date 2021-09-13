@@ -10,9 +10,6 @@ purchaseCtrl.create = async (req, res) => {
     .then((data)=>{
         res.status(200).send(data);
     })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });  
 }
 
 purchaseCtrl.read = async (req, res) => {
@@ -22,9 +19,6 @@ purchaseCtrl.read = async (req, res) => {
     .then((data)=>{
         res.status(200).send(data);
     })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });  
 }
 
 purchaseCtrl.update = async (req, res) => {
@@ -34,10 +28,7 @@ purchaseCtrl.update = async (req, res) => {
     await dbController.update(document, model)
     .then((data)=>{
         res.status(200).send(data);
-    })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });  
+    }) 
 }
 
 purchaseCtrl.delete = async (req, res) => {
@@ -47,9 +38,6 @@ purchaseCtrl.delete = async (req, res) => {
     .then((data)=>{
         res.status(200).send(data);
     })
-    .catch((e)=>{
-        res.status(400).send({status: "database request fail"});
-    });   
 }
 
 module.exports = purchaseCtrl;
